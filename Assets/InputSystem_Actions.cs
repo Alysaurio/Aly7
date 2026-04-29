@@ -937,6 +937,78 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Habilidades"",
+            ""id"": ""0d2a7f5c-43f4-45af-be6f-52c7a4cfea5f"",
+            ""actions"": [
+                {
+                    ""name"": ""ataque"",
+                    ""type"": ""Button"",
+                    ""id"": ""15505390-7174-4af1-b869-ff3f38cb77f3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4b0242b2-c63f-4a39-b808-8a4b9183837a"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ataque"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""28bece11-7210-4185-bdd6-dc5c55bcf216"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ataque"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74e49efd-0d6c-480f-a0bf-b081d0491941"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ataque"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37e13f15-f9e8-49b0-9039-510ff2ef3845"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ataque"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cea9b215-bcb3-495d-9e10-1fba1362f020"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ataque"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1024,6 +1096,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // Habilidades
+        m_Habilidades = asset.FindActionMap("Habilidades", throwIfNotFound: true);
+        m_Habilidades_ataque = m_Habilidades.FindAction("ataque", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1031,6 +1106,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_Player1.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Player1.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Player2.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Player2.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputSystem_Actions.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Habilidades.enabled, "This will cause a leak and performance issues, InputSystem_Actions.Habilidades.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1533,6 +1609,102 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="UIActions" /> instance referencing this action map.
     /// </summary>
     public UIActions @UI => new UIActions(this);
+
+    // Habilidades
+    private readonly InputActionMap m_Habilidades;
+    private List<IHabilidadesActions> m_HabilidadesActionsCallbackInterfaces = new List<IHabilidadesActions>();
+    private readonly InputAction m_Habilidades_ataque;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Habilidades".
+    /// </summary>
+    public struct HabilidadesActions
+    {
+        private @InputSystem_Actions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public HabilidadesActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Habilidades/ataque".
+        /// </summary>
+        public InputAction @ataque => m_Wrapper.m_Habilidades_ataque;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Habilidades; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="HabilidadesActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(HabilidadesActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="HabilidadesActions" />
+        public void AddCallbacks(IHabilidadesActions instance)
+        {
+            if (instance == null || m_Wrapper.m_HabilidadesActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_HabilidadesActionsCallbackInterfaces.Add(instance);
+            @ataque.started += instance.OnAtaque;
+            @ataque.performed += instance.OnAtaque;
+            @ataque.canceled += instance.OnAtaque;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="HabilidadesActions" />
+        private void UnregisterCallbacks(IHabilidadesActions instance)
+        {
+            @ataque.started -= instance.OnAtaque;
+            @ataque.performed -= instance.OnAtaque;
+            @ataque.canceled -= instance.OnAtaque;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="HabilidadesActions.UnregisterCallbacks(IHabilidadesActions)" />.
+        /// </summary>
+        /// <seealso cref="HabilidadesActions.UnregisterCallbacks(IHabilidadesActions)" />
+        public void RemoveCallbacks(IHabilidadesActions instance)
+        {
+            if (m_Wrapper.m_HabilidadesActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="HabilidadesActions.AddCallbacks(IHabilidadesActions)" />
+        /// <seealso cref="HabilidadesActions.RemoveCallbacks(IHabilidadesActions)" />
+        /// <seealso cref="HabilidadesActions.UnregisterCallbacks(IHabilidadesActions)" />
+        public void SetCallbacks(IHabilidadesActions instance)
+        {
+            foreach (var item in m_Wrapper.m_HabilidadesActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_HabilidadesActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="HabilidadesActions" /> instance referencing this action map.
+    /// </summary>
+    public HabilidadesActions @Habilidades => new HabilidadesActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -1733,5 +1905,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Habilidades" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="HabilidadesActions.AddCallbacks(IHabilidadesActions)" />
+    /// <seealso cref="HabilidadesActions.RemoveCallbacks(IHabilidadesActions)" />
+    public interface IHabilidadesActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "ataque" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAtaque(InputAction.CallbackContext context);
     }
 }
