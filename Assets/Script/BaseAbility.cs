@@ -1,14 +1,12 @@
 using UnityEngine;
 
-public class BaseAbility : MonoBehaviour
+public abstract class BaseAbility : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public abstract void Execute();
     void Start()
     {
         
     }
-
-    // Update is called once per frame
     void Update()
     {
         
