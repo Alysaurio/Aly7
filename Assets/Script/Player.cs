@@ -134,6 +134,7 @@ public class Player : BaseEntity
         //Enemys.Remove(collision.gameObject);
     }
 
+    /*
     public override void TakeDamage(BaseEntity damager)
     {
         // base.TakeDamage(damager);
@@ -164,6 +165,6 @@ public class Player : BaseEntity
         }
 
         stats.TakeDamage(damage);
-    }
+    } */
 }
     
